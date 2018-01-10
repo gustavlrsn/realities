@@ -3,8 +3,24 @@ import Downshift from 'downshift';
 import PropTypes from 'prop-types';
 import { ListGroup, ListGroupItem, Input, Badge } from 'reactstrap';
 import styled from 'styled-components';
+import Fuse from 'fuse.js';
 
 import MdCancelIcon from 'react-icons/lib/md/cancel';
+
+// See http://fusejs.io/ for usage of Fuse options.
+
+const fuseOptions = {
+  tokenize: false,
+  shouldSort: true,
+  threshold: 0.35,
+  location: 0,
+  distance: 100,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: [
+    'title', 'name',
+  ],
+};
 
 const CancelButton = styled.button`
   position: absolute;
@@ -127,6 +143,12 @@ class Search extends React.Component {
     return items;
   };
 
+  fuzzySearch = (items, inputValue) => {
+    const fuse = new Fuse(items, fuseOptions);
+    const result = fuse.search(inputValue);
+    return result;
+  };
+
   render() {
     return (
       <ControlledAutocomplete
@@ -139,13 +161,18 @@ class Search extends React.Component {
         onInputChange={this.handleInputChange}
         onClearSelection={this.clearSelection}
         itemToString={this.itemToString}
+        fuzzySearch={this.fuzzySearch}
       />
     );
   }
 }
 
 function ControlledAutocomplete({
-  onInputChange, onClearSelection, items, ...rest // eslint-disable-line react/prop-types
+  onInputChange, // eslint-disable-line react/prop-types
+  onClearSelection, // eslint-disable-line react/prop-types
+  fuzzySearch, // eslint-disable-line react/prop-types
+  items, // eslint-disable-line react/prop-types
+  ...rest // eslint-disable-line react/prop-types
 }) {
   return (
     <div>
@@ -171,10 +198,7 @@ function ControlledAutocomplete({
 
               { isOpen && (
                 <ListGroupPulldown>
-                  { items && items
-                    .filter(i =>
-                    !inputValue ||
-                    i.title.toLowerCase().includes(inputValue.toLowerCase()))
+                  { items && fuzzySearch(items, inputValue)
                     .map((item, index) => (
                       <ListGroupItem
                         key={item.nodeId}
