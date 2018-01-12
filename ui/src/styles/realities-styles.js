@@ -1,4 +1,4 @@
-import { InputGroup, ListGroup, ListGroupItem, Card } from 'reactstrap';
+import { InputGroup, ListGroup, ListGroupItem, Badge, Card } from 'reactstrap';
 import styled from 'styled-components';
 import MdAddCircleOutline from 'react-icons/lib/md/add-circle-outline';
 
@@ -35,7 +35,7 @@ const RealitiesCircleOutline = styled(MdAddCircleOutline)`
 }
 `;
 
-const CreateNeedInput = styled(InputGroup)`
+const CreateRealitiesInput = styled(InputGroup)`
   margin-bottom: 1em;
   .input-group-prepend {
     margin-right: -3px;
@@ -62,31 +62,16 @@ const CreateNeedInput = styled(InputGroup)`
     border-radius: .25rem;
    }
 `;
-const CreateResponsibilityInput = styled(InputGroup)`
-  margin-bottom: 1em;
-  .input-group-prepend {
-    margin-right: -3px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
+
+const CreateNeedInput = styled(CreateRealitiesInput)`
  .input-group-text {
-    padding: .375rem .75rem;
-    margin-bottom: 0;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
+    background-color: #00cf19;
+   }
+`;
+
+const CreateResponsibilityInput = styled(CreateRealitiesInput)`
+ .input-group-text {
     background-color: #843cfd;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
    }
 `;
 
@@ -138,10 +123,17 @@ const ResponsibilitiesListGroupItem = RealitiesListGroupItem.extend`
   }
 `;
 
+const NeedBadge = styled(Badge)`
+  padding: .5em;
+  margin-bottom: .5em;
+  background-color: #00cf19;
+`;
+
 export {
   CircleButton,
   CreateNeedInput,
   CreateResponsibilityInput,
+  NeedBadge,
   NeedsListHeader,
   NeedsListGroupItem,
   ResponsibilitiesListHeader,

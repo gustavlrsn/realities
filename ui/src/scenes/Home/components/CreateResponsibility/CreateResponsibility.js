@@ -2,19 +2,11 @@ import React, { Component } from 'react';
 import {
   Input,
   InputGroupButton,
-  Badge,
 } from 'reactstrap';
-import { CreateResponsibilityInput } from '@/styles/realities-styles';
+import { CreateResponsibilityInput, NeedBadge } from '@/styles/realities-styles';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-const NeedBadge = styled(Badge)`
-  padding: .5em;
-  margin-bottom: .5em;
-  background-color: #00cf19;
-`;
 
 class CreateResponsibility extends Component {
   constructor() {
